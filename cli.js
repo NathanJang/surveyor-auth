@@ -20,6 +20,11 @@ commander
     .option('--hash-length <n>', 'Specify a hash length. Defaults to 8.')
     .parse(process.argv);
 
+// Error if no command specified.
+if (!commander.generate && !commander.generateRange && !commander.verify) {
+    throw new Error('No command specified.');
+}
+
 // Error if there isn't an ID.
 if (!commander.id) {
     throw new Error('No ID specified.');

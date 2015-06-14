@@ -46,14 +46,15 @@ SurveyorAuth.prototype.generateSalt = function () {
     return random.hex(this.SALT_LENGTH);
 };
 
-/** @method generateTokenWithIdAndSalt
+/** @function generateTokenWithIdAndSalt
  * Generates a Token object given an id and a salt.
  * This should generally not be used in production; use {@link SurveyorAuth#generateTokenWithId} instead.
+ * @private
  * @param {Number} id
  * @param {String} salt
  * @returns {Token}
  */
-SurveyorAuth.prototype.generateTokenWithIdAndSalt = function (id, salt) {
+var generateTokenWithIdAndSalt = function (id, salt) {
     // Check if the salt is the correct length.
     if (salt.length !== this.SALT_LENGTH) {
         throw new Error('The salt does not have the correct length.');
@@ -83,7 +84,7 @@ SurveyorAuth.prototype.generateTokenWithIdAndSalt = function (id, salt) {
 SurveyorAuth.prototype.generateTokenWithId = function (id) {
     // Pass a random salt to generateTokenWithIdAndSalt.
     var salt = this.generateSalt();
-    return this.generateTokenWithIdAndSalt(id, salt);
+    return generateTokenWithIdAndSalt.call(this, id, salt);
 };
 
 /** @method generateTokensWithIdRange
@@ -126,7 +127,7 @@ SurveyorAuth.prototype.verifyTokenWithId = function (id, token) {
     }
 
     // Regenerate a token based on the ID and the salt.
-    var regeneratedToken = this.generateTokenWithIdAndSalt(id, token.salt);
+    var regeneratedToken = generateTokenWithIdAndSalt.call(this, id, token.salt);
     // Compare the two tokens; if they're the same, then all is well.
     return regeneratedToken.toString() === token.toString();
 };
