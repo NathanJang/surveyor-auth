@@ -24,6 +24,13 @@ $ surveyor-auth --verify --key 'private key here' --id 5 --token 6f4c93509d
 $ surveyor-auth --generate-range --key 'private key here' --id 0 --to 100 > tokens.json
 ```
 
+## Installation
+```bash
+$ npm install https://github.com/NathanJang/surveyor-auth
+# or
+$ npm install -g https://github.com/NathanJang/surveyor-auth
+```
+
 ## Problem
 When conducting a survey or election, 3 things must be considered:
 
