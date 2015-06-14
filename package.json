@@ -1,11 +1,13 @@
 {
   "name": "surveyor-auth",
+  "description": "A protocol and implementation of token-based digital authentication in surveys/elections.",
   "version": "1.0.0",
   "main": "index.js",
   "bin": {
     "surveyor-auth": "./cli.js"
   },
   "author": "Jonathan Chan <ycjc@outlook.com>",
+  "repository": "https://github.com/NathanJang/surveyor-auth",
   "dependencies": {
     "commander": "^2.8.1",
     "jshashes": "^1.0.5",
