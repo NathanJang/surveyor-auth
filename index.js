@@ -1,6 +1,10 @@
 // Import a library for computing SHA256 hashes.
 var Hashes = require('jshashes');
 var SHA256 = new Hashes.SHA256();
+// Wrapper function for generating a hash as a hex string.
+var hash = function () {
+    return SHA256.hex.apply(this, arguments);
+};
 
 // Import a library for generating cryptographically secure random bits.
 var Random = require('random-js');
@@ -15,12 +19,13 @@ var Token = require('./token');
  * @param {String} privateKey - A private key that will be used to generate and verify tokens.
  * @param {Number} saltLength - An optional parameter representing the length of the salt. Defaults to 2.
  * @param {Number} shortenedHashLength - An optional parameter representing the length of the SHA256 hash's substring length. Defaults to 8.
+ * @param {Number} hashIterations - An optional parameter representing the number of iterations of hashing to put the data through. Defaults to 4.
  */
-var SurveyorAuth = function (privateKey, saltLength, shortenedHashLength) {
+var SurveyorAuth = function (privateKey, saltLength, shortenedHashLength, hashIterations) {
     // Make the `new` keyword optional.
     // It's a JavaScript quirk that can be ignored.
     if (!(this instanceof SurveyorAuth)) {
-        return new SurveyorAuth(saltLength, shortenedHashLength);
+        return new SurveyorAuth(privateKey, saltLength, shortenedHashLength, hashIterations);
     }
 
     // Error if there is no private key specified.
@@ -34,6 +39,7 @@ var SurveyorAuth = function (privateKey, saltLength, shortenedHashLength) {
     // Assign properties with defaults if the values were not specified in object creation.
     this.SALT_LENGTH = saltLength || 2;
     this.SHORTENED_HASH_LENGTH = shortenedHashLength || 8;
+    this.HASH_ITERATIONS = hashIterations || 4;
 };
 
 /** @method generateSalt
@@ -67,10 +73,19 @@ var generateTokenWithIdAndSalt = function (id, salt) {
         throw new Error('The ID must be greater than 0.');
     }
 
-    // Generate a string to hash by joining the ID, private key, and salt with underscores.
-    var stringToHash = [id, this.PRIVATE_KEY, salt].join('_');
-    // Hash it.
-    var rawHash = SHA256.hex(stringToHash);
+    // Iterate through the hashing process.
+    // Begin with the private key.
+    var currentKey = this.PRIVATE_KEY;
+
+    for (var i = 0; i < this.HASH_ITERATIONS; i++) {
+        // Generate a string to hash by joining the ID, current key (the private key or the previous hash), and salt with underscores.
+        var stringToHash = [id, currentKey, salt].join('_');
+        // Hash it and assign the next current key to the result.
+        currentKey = hash(stringToHash);
+    }
+
+    var rawHash = currentKey;
+
     // Take the SHA256 hash's first nth characters, where n is the SurveyorAuth object's hash length setting.
     var shortenedHash = rawHash.substring(0, this.SHORTENED_HASH_LENGTH);
     return new Token(id, salt, shortenedHash);
