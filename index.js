@@ -37,9 +37,9 @@ var SurveyorAuth = function (privateKey, saltLength, shortenedHashLength, hashIt
     this.PRIVATE_KEY = privateKey;
 
     // Assign properties with defaults if the values were not specified in object creation.
-    this.SALT_LENGTH = saltLength || 2;
-    this.SHORTENED_HASH_LENGTH = shortenedHashLength || 8;
-    this.HASH_ITERATIONS = hashIterations || 4;
+    this.SALT_LENGTH = saltLength ? Math.floor(saltLength) : 2;
+    this.SHORTENED_HASH_LENGTH = shortenedHashLength ? Math.floor(shortenedHashLength) : 8;
+    this.HASH_ITERATIONS = hashIterations ? Math.floor(hashIterations) : 4;
 };
 
 /** @method generateSalt
