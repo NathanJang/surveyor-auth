@@ -144,7 +144,7 @@ SurveyorAuth.prototype.verifyTokenWithId = function (id, token) {
     // Regenerate a token based on the ID and the salt.
     var regeneratedToken = generateTokenWithIdAndSalt.call(this, id, token.salt);
     // Compare the two tokens; if they're the same, then all is well.
-    return regeneratedToken.toString() === token.toString();
+    return Token.compare(regeneratedToken, token);
 };
 
 module.exports = SurveyorAuth;

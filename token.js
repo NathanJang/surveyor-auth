@@ -35,4 +35,14 @@ Token.tokenWithString = function (id, string, saltLength, hashLength) {
     return new Token(id, salt, hash);
 };
 
+Token.compare = function (a, b) {
+    if (!(a instanceof Token) || !(b instanceof Token)) {
+        throw new Error('Unable to compare non-objects of Token.');
+    }
+
+    a.id = Math.floor(a.id);
+    b.id = Math.floor(b.id);
+    return a.id === b.id && a.salt === b.salt && a.hash === b.hash;
+};
+
 module.exports = Token;
