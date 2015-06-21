@@ -2,7 +2,7 @@ var Token = function (id, salt, hash) {
     // Make the `new` keyword optional.
     // It's a JavaScript quirk that can be ignored.
     if (!(this instanceof Token)) {
-        return new Token(salt,hash);
+        return new Token(id, salt, hash);
     }
 
     // Assign the object's properties.
