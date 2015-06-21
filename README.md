@@ -76,16 +76,16 @@ It is assumed that all strings are encoded UTF-8.
 * ID: `3`
 * salt: `6f`
 * 1st iteration
-** value to hash: `3_oh one one eight nine nine nine_6f`
-** SHA256: `4c93509dd6540168e2aa36d48081b2b075e386122e365dcfffacafafe3909727`
+  * value to hash: `3_oh one one eight nine nine nine_6f`
+  * SHA256: `4c93509dd6540168e2aa36d48081b2b075e386122e365dcfffacafafe3909727`
 * 2nd iteration
-** value to hash: `3_4c93509dd6540168e2aa36d48081b2b075e386122e365dcfffacafafe3909727_6f`
-** SHA256: `40ec22884e8a018cf0e5648085fbd423de36b07ce7663591690785fd3d8dcd8d`
+  * value to hash: `3_4c93509dd6540168e2aa36d48081b2b075e386122e365dcfffacafafe3909727_6f`
+  * SHA256: `40ec22884e8a018cf0e5648085fbd423de36b07ce7663591690785fd3d8dcd8d`
 * 3rd iteration
-** value to hash: `3_40ec22884e8a018cf0e5648085fbd423de36b07ce7663591690785fd3d8dcd8d_6f`
-** SHA256: `21b1f6f09c644ea720117d130a21de3421a80f4463ddd0d11330a51cd5d66ffc`
+  * value to hash: `3_40ec22884e8a018cf0e5648085fbd423de36b07ce7663591690785fd3d8dcd8d_6f`
+  * SHA256: `21b1f6f09c644ea720117d130a21de3421a80f4463ddd0d11330a51cd5d66ffc`
 * 4th iteration
-** value to hash: `3_21b1f6f09c644ea720117d130a21de3421a80f4463ddd0d11330a51cd5d66ffc_6f`
-** SHA256: `6def0cf701fd4edc637cbab4bb3b8e26cd901878fae0d89fca7b1e02b275be4c`
+  * value to hash: `3_21b1f6f09c644ea720117d130a21de3421a80f4463ddd0d11330a51cd5d66ffc_6f`
+  * SHA256: `6def0cf701fd4edc637cbab4bb3b8e26cd901878fae0d89fca7b1e02b275be4c`
 * hash substring: `6def0cf7`
 * token: salt + hash substring: `6f6def0cf7`
